@@ -8,5 +8,8 @@
 <body>
     <h1>Response Page</h1>
     <pre>{{ json_encode($response, JSON_PRETTY_PRINT) }}</pre>
+
+    <h2>Update Status Response</h2>
+    <pre>{{ json_encode($updateStatusResponse, JSON_PRETTY_PRINT) }}</pre>
 </body>
 </html>

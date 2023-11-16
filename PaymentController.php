@@ -16,6 +16,19 @@ class PaymentController extends Controller
     {
         $response = Http::post('http://localhost:5000/create_payment_request', $request->all());
 
-        return view('response', ['response' => $response->json()]);
+        // Extract reference number from the response
+        $referenceNumber = $response->json()['Redirect_Body']['Reference_Number'];
+
+        // Make a subsequent request to update payment status
+        $updateStatusResponse = Http::post('http://localhost:5000/update_payment_status', [
+            'reference_number' => $referenceNumber,
+        ]);
+
+        return view('response', [
+            'response' => $response->json(),
+            'updateStatusResponse' => $updateStatusResponse->json(),
+        ]);
+        
+        
     }
 }
