@@ -1,15 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- resources/views/payment.blade.php -->
+
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Response Page</title>
+    <!-- Add any necessary styles or scripts -->
 </head>
 <body>
-    <h1>Response Page</h1>
-    <pre>{{ json_encode($response, JSON_PRETTY_PRINT) }}</pre>
 
-    <h2>Update Status Response</h2>
-    <pre>{{ json_encode($updateStatusResponse, JSON_PRETTY_PRINT) }}</pre>
+    <!-- Render the payment form with the received data -->
+    <form id="paymentForm" action="https://stg-mpg.revpay-sandbox.com.my/v1/payment" method="post">
+        <!-- Add form fields with data from $responseData -->
+        <input type="text" name="Revpay_Merchant_ID" value="{{ $responseData['Revpay_Merchant_ID'] }}"><br>
+        <input type="text" name="Merchant_Key" value="{{ $responseData['Merchant_Key'] }}"><br>
+        <input type="text" name="Key_Index" value="{{ $responseData['Key_Index'] }}"><br>
+        <input type="text" name="Reference_Number" value="{{ $responseData['Reference_Number'] }}"><br>
+        <input type="text" name="Amount" value="{{ $responseData['Amount'] }}"><br>
+        <input type="text" name="Currency" value="{{ $responseData['Currency'] }}"><br>
+        <input type="text" name="Transaction_Description" value="{{ $responseData['Transaction_Description'] }}"><br>
+        <input type="text" name="Signature" value="{{ $responseData['Signature'] }}"><br>
+    </form>
+
+    <!-- Add JavaScript to automatically submit the form -->
+    <script>
+        document.getElementById('paymentForm').submit();
+    </script>
+
 </body>
 </html>
