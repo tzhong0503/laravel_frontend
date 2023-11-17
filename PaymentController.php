@@ -14,21 +14,13 @@ class PaymentController extends Controller
 
     public function submitPayment(Request $request)
     {
+
         $response = Http::post('http://localhost:5000/create_payment_request', $request->all());
 
-        // Extract reference number from the response
-        $referenceNumber = $response->json()['Redirect_Body']['Reference_Number'];
+        // Get the response body
+        $responseData = $response->json();
 
-        // Make a subsequent request to update payment status
-        $updateStatusResponse = Http::post('http://localhost:5000/update_payment_status', [
-            'reference_number' => $referenceNumber,
-        ]);
-
-        return view('response', [
-            'response' => $response->json(),
-            'updateStatusResponse' => $updateStatusResponse->json(),
-        ]);
-        
-        
+        // Render the payment form view with the response data
+        return view('response')->with('responseData', $responseData);
     }
 }
